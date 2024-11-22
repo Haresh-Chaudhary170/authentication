@@ -107,3 +107,25 @@ exports.verifyEmail = async (req, res, next) => {
     next(error);
   } 
 };
+
+
+
+exports.getLogin = (req, res) => {
+  res.render("index", { user: req.user });
+};
+
+exports.dashboard = (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+  res.render("templates/dashboard", { user: req.user });
+};
+
+exports.logout = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};
